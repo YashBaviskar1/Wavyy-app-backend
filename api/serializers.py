@@ -6,5 +6,5 @@ class CustomerSerializer(serializers.ModelSerializer) :
         model = Customer 
         fields = ('id', 'unique_id', 'name', 'email', 
                   'phone_number', 'date_of_birth', 
-                  'created_at')
+                  'created_at', 'profile_picture')
         

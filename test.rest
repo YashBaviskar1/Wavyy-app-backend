@@ -1,0 +1,78 @@
+###
+POST http://127.0.0.1:8000/api/auth/signup
+Content-Type: application/json
+
+{
+    "method" : "phone",
+    "phone_number" : "+91876652263"
+}
+###
+
+POST http://127.0.0.1:8000/api/auth/verify-otp
+Content-Type: application/json
+
+{
+  "otp": "9573",
+  "phone_number": "+918356896671"
+}
+
+
+
+
+
+
+###
+POST http://127.0.0.1:8000/api/auth/signup
+Content-Type: application/json
+
+{
+    "method" : "email",
+    "email" : "yashbav2224@gmail.com",
+    "password" : "123456"
+}
+
+
+###
+
+###
+# Signup Request
+POST http://127.0.0.1:8000/api/auth/signup_create_user
+Content-Type: application/json
+
+{
+  "unique_id": "KKGKK",
+  "name": "Yash Baviskar",
+  "email": "yashbav24@gmail.com",
+  "phone_number": "+918356866781",
+  "date_of_birth": "2004-08-24",
+  "profile_picture": "default-avatar"
+}
+
+###
+# LOGIN REQUEST
+POST http://127.0.0.1:8000/api/auth/login
+Content-Type: application/json
+{
+  "method": "phone",
+  "phone_number": "+918356896671"
+}
+###
+POST http://127.0.0.1:8000/api/auth/login
+Content-Type: application/json
+
+{
+  "method": "email",
+  "email": "@gmail.com",
+  "password" : "123456"
+}
+
+###
+POST http://127.0.0.1:8000/api/auth/verify-otp
+Content-Type: application/json
+
+{
+  "otp": "9573",
+  "phone_number": "+918356896671"
+}
+
+
