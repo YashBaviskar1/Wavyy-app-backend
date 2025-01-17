@@ -9,6 +9,6 @@ urlpatterns = [
     path('auth/signup_create_user', signup_create_user),
     path('auth/login', login),
     path('auth/verify-otp', verify_otp ),
-    path('auth/test/token', test_token)
+    path('auth/test_token', test_token)
 
 ]

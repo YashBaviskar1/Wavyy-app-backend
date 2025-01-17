@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
     "method" : "phone",
-    "phone_number" : "+91876652263"
+    "phone_number" : "+9187665226311"
 }
 ###
 
@@ -12,8 +12,8 @@ POST http://127.0.0.1:8000/api/auth/verify-otp
 Content-Type: application/json
 
 {
-  "otp": "9573",
-  "phone_number": "+918356896671"
+  "otp": "8976",
+  "phone_number": "+9187665226311"
 }
 
 
@@ -40,10 +40,10 @@ POST http://127.0.0.1:8000/api/auth/signup_create_user
 Content-Type: application/json
 
 {
-  "unique_id": "KKGKK",
-  "name": "Yash Baviskar",
-  "email": "yashbav24@gmail.com",
-  "phone_number": "+918356866781",
+  "unique_id": "SSSSS",
+  "name": "Harishchandra",
+  "email": "harishchandra@gmail.com",
+  "phone_number": "+9187665226311",
   "date_of_birth": "2004-08-24",
   "profile_picture": "default-avatar"
 }
@@ -52,10 +52,13 @@ Content-Type: application/json
 # LOGIN REQUEST
 POST http://127.0.0.1:8000/api/auth/login
 Content-Type: application/json
+
 {
   "method": "phone",
-  "phone_number": "+918356896671"
+  "phone_number": "+9187665226311"
 }
+
+
 ###
 POST http://127.0.0.1:8000/api/auth/login
 Content-Type: application/json
@@ -71,8 +74,13 @@ POST http://127.0.0.1:8000/api/auth/verify-otp
 Content-Type: application/json
 
 {
-  "otp": "9573",
-  "phone_number": "+918356896671"
+  "otp": "2805",
+  "phone_number": "+9187665226311"
 }
 
 
+
+###
+
+GET http://127.0.0.1:8000/api/auth/test_token
+Authorization: Token  f26720f82eab7e5ae47e30357820a440055ab073

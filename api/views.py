@@ -12,7 +12,8 @@ from django.core.cache import cache
 from django.contrib.auth import authenticate
 import time
 import random 
-
+from twilio.rest import Client
+import os 
 class CustomerView(generics.CreateAPIView) :
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
@@ -25,6 +26,16 @@ def generate_otp() :
     return random.randint(1000, 9999)
 
 def send_otp(otp, phone_number) : 
+    account_sid = os.environ["TWILIO_ACCOUNT_SID"]
+    auth_token = os.environ["TWILIO_AUTH_TOKEN"]
+    client = Client(account_sid, auth_token)
+    message = client.messages.create(
+        body="Your Login OTP for wavvy application is {otp}. Welcome aboard!",
+        from_="+16206788254 ",
+        to=f"{phone_number}",
+    )
+
+    # print(message.body)
     print(f"{otp} sent to number {phone_number}")
 
 def user_exists(phone_number = None, email = None):
@@ -132,11 +143,14 @@ def signup_create_user(request):
         return Response({"token" : token.key, "customer" : serializer.data})
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
+from rest_framework.decorators import authentication_classes, permission_classes
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 @api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def test_token(request):
-    return Response({})
+    return Response({"passed for {}".format(request.user)})
 
 
 

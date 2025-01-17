@@ -1,6 +1,9 @@
 env/
+.env
 db.sqlite3
 api\__pycache__
 mobile_backend\__pycache__
 mobile_backend\api\__pycache__
-mobile_backend\api\migrations\__pycache__
+mobile_backend\api\migrations\__pycache__/
+mobile_backend\settings.py
+test.rest
