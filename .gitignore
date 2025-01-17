@@ -5,5 +5,6 @@ api\__pycache__
 mobile_backend\__pycache__
 mobile_backend\api\__pycache__
 mobile_backend\api\migrations\__pycache__/
-mobile_backend\settings.py
+settings.py
+mobile_backend/settings.py
 test.rest
