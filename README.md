@@ -38,6 +38,6 @@ then run these following commands to start the server locally
 ```bash
 python3 manage.py makemigrations
 python3 manage.py migrate
-python manage.py runserver
+python3 manage.py runserver
 
 ```
