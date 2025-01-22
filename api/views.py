@@ -1,26 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse , request
 from rest_framework import generics, status
-from .models import Customer
-from .serializers import CustomerSerializer
-from rest_framework.decorators import api_view
+from .models import Customer, Salon, Services
+from .serializers import CustomerSerializer, ServiceSerializer, SalonSerializer
+from rest_framework.decorators import api_view, APIView
 from rest_framework.response import Response
 from .serializers import CustomerSerializer
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.contrib.auth import authenticate
+from django.db.models import Q
 import time
 import random 
 from twilio.rest import Client
 import os 
 from rest_framework.exceptions import NotFound
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.generics import RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-
+import math
 class CustomerView(generics.CreateAPIView) :
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
@@ -91,6 +92,23 @@ def send_otp(otp, phone_number) :
 
 def user_exists(phone_number = None, email = None):
     return Customer.objects.filter(phone_number=phone_number).exists() or Customer.objects.filter(email=email).exists()
+
+#TO CALCUATE DISTANCE 
+def haversine(lat1, lon1, lat2, lon2):
+    R = 6371  
+    phi1 = math.radians(lat1)
+    phi2 = math.radians(lat2)
+    delta_phi = math.radians(lat2 - lat1)
+    delta_lambda = math.radians(lon2 - lon1)
+    
+    a = math.sin(delta_phi / 2)**2 + math.cos(phi1) * math.cos(phi2) * math.sin(delta_lambda / 2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    
+    distance = R * c  
+    return distance
+
+
+
 
 @api_view(['POST']) 
 def login(request):
@@ -200,3 +218,74 @@ def signup_create_user(request):
 @permission_classes([IsAuthenticated])
 def test_token(request):
     return Response({"passed for {}".format(request.user)})
+
+
+
+### -----LOCATION API-------
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_salons_by_location(request):
+    latitude = float(request.query_params.get('latitude'))
+    longitude = float(request.query_params.get('longitude'))
+    
+    salons = Salon.objects.all()
+    nearby_salons = []
+
+    for salon in salons:
+        distance = haversine(latitude, longitude, salon.latitude, salon.longitude)
+        if distance <= 10:  
+            nearby_salons.append({
+                'name': salon.name,
+                'address': salon.address,
+                'distance': distance
+            })
+
+    return Response(nearby_salons)
+
+###----SERVICES----
+
+class ServiceFilterView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        category = request.query_params.get('category')
+        price_min = request.query_params.get('priceMin')
+        price_max = request.query_params.get('priceMax')
+        rating = request.query_params.get('rating')
+
+        filters = Q()
+
+        if category:
+            filters &= Q(category__name__icontains=category)
+        if price_min:
+            filters &= Q(price__gte=price_min)
+        if price_max:
+            filters &= Q(price__lte=price_max)
+        if rating:
+            filters &= Q(rating__gte=rating)
+
+        services = Services.objects.filter(filters)
+        serializer = ServiceSerializer(services, many=True)
+        return Response(serializer.data)
+    
+
+###SALON DETAILS API 
+
+class SalonDetailView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, salon_id):
+        salon = get_object_or_404(Salon, id=salon_id)
+        serializer = SalonSerializer(salon)
+        return Response(serializer.data)
+
+# View for fetching services for a salon
+class SalonServicesView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, salon_id):
+        salon = get_object_or_404(Salon, id=salon_id)
+        services = salon.business_services.all() 
+        serializer = ServiceSerializer(services, many=True)
+        return Response(serializer.data)

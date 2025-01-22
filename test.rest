@@ -132,3 +132,25 @@ Content-Type: application/json
 Authorization: Token 54c1d914b81eedfbd31db023c5e63383d22aa968
 
 
+
+###
+#Location
+GET http://127.0.0.1:8000/api/salons?latitude=28.6139&longitude=77.2090
+Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
+
+###
+#Services 
+GET http://127.0.0.1:8000/api/services/filter?category=Hair&priceMin=500&priceMax=1500&rating=4.5
+Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
+
+###
+#Salon details
+
+GET http://127.0.0.1:8000/api/salons/1
+Content-Type: application/json
+
+
+###
+#Service detials
+GET http://127.0.0.1:8000/api/salons/1/services
+Content-Type: application/json
