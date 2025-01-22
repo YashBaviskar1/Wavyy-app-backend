@@ -40,9 +40,10 @@ POST http://127.0.0.1:8000/api/auth/signup_create_user
 Content-Type: application/json
 
 {
-  "unique_id": "SSSSS",
-  "name": "Harishchandra",
-  "email": "harishchandra@gmail.com",
+  "unique_id": "AABDHP",
+  "name": "YGB",
+  "username" : "hks",
+  "email": "ygb@gmail.com",
   "phone_number": "+9187665226311",
   "date_of_birth": "2004-08-24",
   "profile_picture": "default-avatar"
@@ -83,4 +84,51 @@ Content-Type: application/json
 ###
 
 GET http://127.0.0.1:8000/api/auth/test_token
-Authorization: Token  f26720f82eab7e5ae47e30357820a440055ab073
+Authorization: Token  ca1988d0df616f396f1b858c2dca82bc1ab9d792
+
+
+###
+
+
+#PROFILE MANGEMENT 
+    # path('profile/view', CustomerProfileView.as_view(), name='view-profile'),
+    # path('profile/update', CustomerProfileUpdateView.as_view(), name='update-profile'),
+    # path('profile/delete', CustomerProfileDeleteView.as_view(), name='delete-profile')
+#View - send the token 
+GET http://127.0.0.1:8000/api/profile/view
+Content-Type: application/json
+Authorization: Token 54c1d914b81eedfbd31db023c5e63383d22aa968
+
+###
+
+#Update 
+#specific field
+PATCH  http://127.0.0.1:8000/api/profile/update
+Content-Type: application/json
+Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
+
+{
+    "name": "Updated  YGB"
+}
+
+###
+#all details 
+PUT http://127.0.0.1:8000/api/profile/update
+Content-Type: application/json
+Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
+
+{
+    "name": "Updated  name -2",
+    "email" : "yashbav24@gmail.com",
+    "phone_number" : "+12345678", 
+  "date_of_birth": "2004-08-24",
+}
+
+###
+#DELETE 
+
+DELETE http://127.0.0.1:8000/api/profile/delete  
+Content-Type: application/json
+Authorization: Token 54c1d914b81eedfbd31db023c5e63383d22aa968
+
+

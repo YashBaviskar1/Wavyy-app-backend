@@ -14,6 +14,13 @@ import time
 import random 
 from twilio.rest import Client
 import os 
+from rest_framework.exceptions import NotFound
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import RetrieveAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.decorators import authentication_classes, permission_classes
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 class CustomerView(generics.CreateAPIView) :
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
@@ -22,6 +29,50 @@ class CustomerListView(generics.ListAPIView) :
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
 
+
+# PROFILE VIEW
+class CustomerProfileView(RetrieveAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        try:
+            # Fetch the profile for the authenticated user
+            return self.request.user.customer_profile
+        except Customer.DoesNotExist:
+            # If no profile exists for the user, raise a custom 404 error
+            raise NotFound(detail="Profile Not Found")
+# PROFILE UPDATE 
+
+class CustomerProfileUpdateView(UpdateAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get_object(self):
+        try:
+            return self.request.user.customer_profile
+        except Customer.DoesNotExist:
+            raise NotFound(detail="Profile Not Found")
+# PROFILE UPDATE 
+
+from rest_framework.generics import DestroyAPIView
+
+# PROFILE DELETE
+
+
+class CustomerProfileDeleteView(DestroyAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get_object(self):
+        try:
+            return self.request.user.customer_profile
+        except Customer.DoesNotExist:
+            raise NotFound(detail="Profile Not Found")
 def generate_otp() : 
     return random.randint(1000, 9999)
 
@@ -143,15 +194,9 @@ def signup_create_user(request):
         return Response({"token" : token.key, "customer" : serializer.data})
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-from rest_framework.decorators import authentication_classes, permission_classes
-from rest_framework.authentication import SessionAuthentication, TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def test_token(request):
     return Response({"passed for {}".format(request.user)})
-
-
-
-

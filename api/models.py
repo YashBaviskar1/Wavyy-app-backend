@@ -19,5 +19,3 @@ class Customer(models.Model) :
     date_of_birth = models.DateField(null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     profile_picture = models.CharField(max_length=255, null=True, blank=True) 
-
-

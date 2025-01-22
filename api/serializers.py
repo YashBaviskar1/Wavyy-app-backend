@@ -7,4 +7,4 @@ class CustomerSerializer(serializers.ModelSerializer) :
         fields = ('id', 'unique_id', 'name', 'email', 
                   'phone_number', 'date_of_birth', 
                   'created_at', 'profile_picture')
-        
+        read_only_fields = ['unique_id', 'created_at']
