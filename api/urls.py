@@ -2,7 +2,7 @@
 from django.urls import path
 from .views import CustomerView, CustomerListView, signup_create_user, login, test_token, verify_otp, signup
 from .views import CustomerProfileView, CustomerProfileUpdateView, CustomerProfileDeleteView, get_salons_by_location, ServiceFilterView
-from .views import SalonDetailView, SalonServicesView
+from .views import SalonDetailView, SalonServicesView, BookingCreateView, BookingStatusView, BookingCancelView
 urlpatterns = [
     path('post', CustomerView.as_view()),
     path('get', CustomerListView.as_view()),
@@ -18,4 +18,7 @@ urlpatterns = [
     path('services/filter', ServiceFilterView.as_view(), name='service_filter'),
     path('salons/<int:salon_id>', SalonDetailView.as_view(), name='salon_detail'),
     path('salons/<int:salon_id>/services', SalonServicesView.as_view(), name='salon_services'),
+    path('bookings/create', BookingCreateView.as_view(), name='create_booking'),
+    path('bookings/<int:booking_id>/cancel', BookingCancelView.as_view(), name='cancel_booking'),
+    path('bookings/status', BookingStatusView.as_view(), name='booking_status'),
 ]

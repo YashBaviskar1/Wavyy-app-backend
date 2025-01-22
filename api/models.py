@@ -78,3 +78,22 @@ class Packages(models.Model):
 
     def __str__(self):
         return self.package_name
+    
+
+class Booking(models.Model):
+    STATUS_CHOICES = [
+        ("active", "Active"),
+        ("completed", "Completed"),
+        ("canceled", "Canceled"),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bookings")
+    salon = models.ForeignKey(Salon, on_delete=models.CASCADE, related_name="salon_bookings")
+    service = models.ForeignKey(Services, on_delete=models.CASCADE, related_name="service_bookings")
+    booking_date = models.DateTimeField(auto_now_add=True)
+    appointment_date = models.DateTimeField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="active")
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"Booking {self.id} for {self.user.username} at {self.salon.salon_name}"

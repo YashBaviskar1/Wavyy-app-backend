@@ -97,7 +97,7 @@ Authorization: Token  ca1988d0df616f396f1b858c2dca82bc1ab9d792
 #View - send the token 
 GET http://127.0.0.1:8000/api/profile/view
 Content-Type: application/json
-Authorization: Token 54c1d914b81eedfbd31db023c5e63383d22aa968
+Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
 
 ###
 
@@ -154,3 +154,34 @@ Content-Type: application/json
 #Service detials
 GET http://127.0.0.1:8000/api/salons/1/services
 Content-Type: application/json
+
+
+###
+#BOOKING 
+POST http://127.0.0.1:8000/api/bookings/create
+Content-Type: application/json
+Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
+
+{
+  "salon_id": 1,
+  "service_id": 2,
+  "appointment_date": "2025-01-24T10:00:00Z"
+}
+
+###
+#Booking get 
+
+GET http://127.0.0.1:8000/api/bookings/status?userId=2
+Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
+
+###
+#Booking Cancel 
+DELETE http://127.0.0.1:8000/api/bookings/1/cancel
+Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
+
+###
+#View Booking Status 
+GET http://127.0.0.1:8000/api/bookings/status?userId=3
+Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
+
+

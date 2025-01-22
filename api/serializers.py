@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Customer, Services, Salon
+from .models import Customer, Services, Salon, Booking
 
 class CustomerSerializer(serializers.ModelSerializer) :
     class Meta:
@@ -22,3 +22,9 @@ class SalonSerializer(serializers.ModelSerializer):
             'gst', 'salon_description', 'latitude', 'longitude',
             'profile_img'
         ]
+
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = ['id', 'user', 'salon', 'service', 'booking_date', 'appointment_date', 'status', 'total_price']
+        read_only_fields = ['id', 'booking_date', 'status']

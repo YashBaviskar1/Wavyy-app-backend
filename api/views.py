@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse , request
 from rest_framework import generics, status
-from .models import Customer, Salon, Services
-from .serializers import CustomerSerializer, ServiceSerializer, SalonSerializer
+from .models import Customer, Salon, Services, Booking
+from .serializers import CustomerSerializer, ServiceSerializer, SalonSerializer, BookingSerializer
 from rest_framework.decorators import api_view, APIView
 from rest_framework.response import Response
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED, HTTP_200_OK, HTTP_204_NO_CONTENT
 from .serializers import CustomerSerializer
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
@@ -289,3 +290,66 @@ class SalonServicesView(APIView):
         services = salon.business_services.all() 
         serializer = ServiceSerializer(services, many=True)
         return Response(serializer.data)
+
+
+
+## BOOKING HANDLING 
+
+
+# POST /bookings/create
+class BookingCreateView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        salon_id = request.data.get('salon_id')
+        service_id = request.data.get('service_id')
+        appointment_date = request.data.get('appointment_date')
+
+        # Validate input
+        if not salon_id or not service_id or not appointment_date:
+            return Response({"error": "salon_id, service_id, and appointment_date are required."}, status=HTTP_400_BAD_REQUEST)
+
+        salon = get_object_or_404(Salon, id=salon_id)
+        service = get_object_or_404(Services, id=service_id)
+
+        # Create booking
+        booking = Booking.objects.create(
+            user=user,
+            salon=salon,
+            service=service,
+            appointment_date=appointment_date,
+            total_price=service.price
+        )
+        serializer = BookingSerializer(booking)
+        return Response(serializer.data, status=HTTP_201_CREATED)
+
+# DELETE /bookings/{bookingId}/cancel
+class BookingCancelView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, booking_id):
+        booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+
+        if booking.status == "completed":
+            return Response({"error": "Cannot cancel a completed booking."}, status=HTTP_400_BAD_REQUEST)
+
+        booking.status = "canceled"
+        booking.save()
+        return Response({"message": "Booking canceled successfully."}, status=HTTP_200_OK)
+
+# GET /bookings/status?userId={userId}
+class BookingStatusView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user_id = request.query_params.get('userId')
+        if not user_id or int(user_id) != request.user.id:
+            return Response({"error": "Invalid or unauthorized userId."}, status=HTTP_400_BAD_REQUEST)
+
+        bookings = Booking.objects.filter(user=request.user)
+        serializer = BookingSerializer(bookings, many=True)
+        return Response(serializer.data, status=HTTP_200_OK)
