@@ -7,3 +7,4 @@ mobile_backend\api\__pycache__
 mobile_backend\api\migrations\__pycache__/
 settings.py
 test.rest
+py_json.py

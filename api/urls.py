@@ -4,6 +4,8 @@ from .views import CustomerView, CustomerListView, signup_create_user, login, te
 from .views import CustomerProfileView, CustomerProfileUpdateView, CustomerProfileDeleteView, get_salons_by_location, ServiceFilterView
 from .views import SalonDetailView, SalonServicesView, BookingCreateView, BookingStatusView, BookingCancelView, SalonCreateView, ServiceCreateView
 from .views import ServiceCategoryCreateView
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('post', CustomerView.as_view()),
     path('get', CustomerListView.as_view()),
@@ -26,3 +28,7 @@ urlpatterns = [
     path('create_service', ServiceCreateView.as_view(), name='create_service'),
     path('service_categories',  ServiceCategoryCreateView.as_view(), name='create-service-category')
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

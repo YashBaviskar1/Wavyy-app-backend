@@ -23,8 +23,10 @@ from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 import math
-
-
+from dotenv import load_dotenv
+load_dotenv()
+TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
+TWILIO_ACCOUNT_AUTH_TOKEN = os.environ.get("TWILIO_ACCOUNT_AUTH_TOKEN")
 class CustomerView(generics.CreateAPIView) :
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
@@ -81,8 +83,8 @@ def generate_otp() :
     return random.randint(1000, 9999)
 
 def send_otp(otp, phone_number) : 
-    account_sid = os.environ("TWILIO_ACCOUNT_SID")
-    auth_token = os.environ("TWILIO_ACCOUNT_AUTH_TOKEN")
+    account_sid = TWILIO_ACCOUNT_SID
+    auth_token = TWILIO_ACCOUNT_AUTH_TOKEN
     client = Client(account_sid, auth_token)
     message = client.messages.create(
         body=f"Your Login OTP for wavvy application is {otp}. Welcome aboard!",
