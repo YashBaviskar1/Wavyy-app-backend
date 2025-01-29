@@ -1,10 +1,10 @@
 ###
-POST http://127.0.0.1:8000/api/auth/signup
+POST http://13.60.171.74:8000/api/auth/signup
 Content-Type: application/json
 
 {
     "method" : "phone",
-    "phone_number" : "+9187665226311"
+    "phone_number" : "+1(318)4266301"
 }
 ###
 
@@ -12,8 +12,8 @@ POST http://127.0.0.1:8000/api/auth/verify-otp
 Content-Type: application/json
 
 {
-  "otp": "8976",
-  "phone_number": "+9187665226311"
+  "otp": "2105",
+  "phone_number": "+918356866781"
 }
 
 
@@ -36,7 +36,7 @@ Content-Type: application/json
 
 ###
 # Signup Request
-POST http://127.0.0.1:8000/api/auth/signup_create_user
+POST http://13.60.172.113:8000/api/auth/signup_create_user
 Content-Type: application/json
 
 {
@@ -84,7 +84,7 @@ Content-Type: application/json
 ###
 
 GET http://127.0.0.1:8000/api/auth/test_token
-Authorization: Token  ca1988d0df616f396f1b858c2dca82bc1ab9d792
+Authorization: Token  30143e8a801bad94b14b68fac4fd135671e740e7
 
 
 ###
@@ -133,13 +133,32 @@ Authorization: Token 54c1d914b81eedfbd31db023c5e63383d22aa968
 
 
 
-###
+### 19.096042531572127, 72.83127903395128
+# 19.2764581,72.8730165
 #Location
-GET http://127.0.0.1:8000/api/salons?latitude=28.6139&longitude=77.2090
+GET http://127.0.0.1:8000/api/salons?latitude=19.2764581&longitude=72.8730165
 Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
 
 ###
 #Services 
+
+#Sample Create Services 
+
+POST http://127.0.0.1:8000/api/salons/1/create_service
+Content-Type: application/json
+
+{
+    "service_name": "Haircut",
+    "service_type": "Basic",
+    "duration_in_mins": 30,
+    "price": 500,
+    "category": 1,
+    "rating": 4.5,
+    "service_image": "path/to/image.jpg"
+}
+
+###
+
 GET http://127.0.0.1:8000/api/services/filter?category=Hair&priceMin=500&priceMax=1500&rating=4.5
 Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
 
@@ -152,8 +171,22 @@ Content-Type: application/json
 
 ###
 #Service detials
+POST http://127.0.0.1:8000/api/service_categories
+Content-Type: application/json
+
+{
+    "business": 1,  
+    "name": "Hair Services",
+    "description": "All hair-related services",
+    "parent": null
+}
+
+
+
+###
 GET http://127.0.0.1:8000/api/salons/1/services
 Content-Type: application/json
+
 
 
 ###

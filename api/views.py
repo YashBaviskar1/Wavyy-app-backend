@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse , request
 from rest_framework import generics, status
-from .models import Customer, Salon, Services, Booking
-from .serializers import CustomerSerializer, ServiceSerializer, SalonSerializer, BookingSerializer
+from .models import Customer, Salon, Services, Booking, ServiceCategory
+from .serializers import CustomerSerializer, ServiceSerializer, SalonSerializer, BookingSerializer, ServiceCategorySerializer, SalonDetailSerializer
 from rest_framework.decorators import api_view, APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED, HTTP_200_OK, HTTP_204_NO_CONTENT
@@ -23,6 +23,8 @@ from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 import math
+
+
 class CustomerView(generics.CreateAPIView) :
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
@@ -79,12 +81,12 @@ def generate_otp() :
     return random.randint(1000, 9999)
 
 def send_otp(otp, phone_number) : 
-    account_sid = "TWILIO_ACCOUNT_SID"
-    auth_token = "TWILIO_AUTH_TOKEN"
+    account_sid = os.environ("TWILIO_ACCOUNT_SID")
+    auth_token = os.environ("TWILIO_ACCOUNT_AUTH_TOKEN")
     client = Client(account_sid, auth_token)
     message = client.messages.create(
-        body="Your Login OTP for wavvy application is {otp}. Welcome aboard!",
-        from_="+16206788254 ",
+        body=f"Your Login OTP for wavvy application is {otp}. Welcome aboard!",
+        from_="+16206788254",
         to=f"{phone_number}",
     )
 
@@ -235,16 +237,28 @@ def get_salons_by_location(request):
 
     for salon in salons:
         distance = haversine(latitude, longitude, salon.latitude, salon.longitude)
-        if distance <= 10:  
+        if distance <= 1000:  
             nearby_salons.append({
-                'name': salon.name,
-                'address': salon.address,
+                'name': salon.salon_name,
                 'distance': distance
             })
 
     return Response(nearby_salons)
 
 ###----SERVICES----
+class ServiceCategoryCreateView(generics.CreateAPIView):
+    permission_classes = [AllowAny]
+    queryset = ServiceCategory.objects.all()
+    serializer_class = ServiceCategorySerializer
+
+class ServiceCreateView(generics.CreateAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = ServiceSerializer
+    queryset = Services.objects.all()
+    serializer_class = ServiceSerializer
+
+
+
 
 class ServiceFilterView(APIView):
     permission_classes = [AllowAny]
@@ -277,9 +291,22 @@ class SalonDetailView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, salon_id):
-        salon = get_object_or_404(Salon, id=salon_id)
-        serializer = SalonSerializer(salon)
+        # Fetch the salon with its related categories and services
+        salon = get_object_or_404(
+            Salon.objects.prefetch_related(
+                'business_categories__services'  # Prefetch related service categories and services
+            ),
+            id=salon_id
+        )
+
+        # Serialize the salon data, including its categories and services
+        serializer = SalonDetailSerializer(salon)
         return Response(serializer.data)
+
+
+class SalonCreateView(generics.CreateAPIView) :
+    queryset = Salon.objects.all()
+    serializer_class = SalonSerializer
 
 # View for fetching services for a salon
 class SalonServicesView(APIView):

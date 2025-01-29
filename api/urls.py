@@ -2,7 +2,8 @@
 from django.urls import path
 from .views import CustomerView, CustomerListView, signup_create_user, login, test_token, verify_otp, signup
 from .views import CustomerProfileView, CustomerProfileUpdateView, CustomerProfileDeleteView, get_salons_by_location, ServiceFilterView
-from .views import SalonDetailView, SalonServicesView, BookingCreateView, BookingStatusView, BookingCancelView
+from .views import SalonDetailView, SalonServicesView, BookingCreateView, BookingStatusView, BookingCancelView, SalonCreateView, ServiceCreateView
+from .views import ServiceCategoryCreateView
 urlpatterns = [
     path('post', CustomerView.as_view()),
     path('get', CustomerListView.as_view()),
@@ -21,4 +22,7 @@ urlpatterns = [
     path('bookings/create', BookingCreateView.as_view(), name='create_booking'),
     path('bookings/<int:booking_id>/cancel', BookingCancelView.as_view(), name='cancel_booking'),
     path('bookings/status', BookingStatusView.as_view(), name='booking_status'),
+    path('create_salons', SalonCreateView.as_view(), name = 'salon-create'),
+    path('create_service', ServiceCreateView.as_view(), name='create_service'),
+    path('service_categories',  ServiceCategoryCreateView.as_view(), name='create-service-category')
 ]
