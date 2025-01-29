@@ -36,15 +36,28 @@ Content-Type: application/json
 
 ###
 # Signup Request
-POST http://13.60.172.113:8000/api/auth/signup_create_user
+POST http://13.60.171.74:8000/api/auth/signup_create_user
 Content-Type: application/json
 
 {
-  "unique_id": "AABDHP",
-  "name": "YGB",
-  "username" : "hks",
+  "unique_id": "ACBSJSF",
+  "name": "test-user",
+  "username" : "test-user",
   "email": "ygb@gmail.com",
-  "phone_number": "+9187665226311",
+  "phone_number": "+1234567989",
+  "date_of_birth": "2004-08-24",
+  "profile_picture": "default-avatar"
+}
+
+###
+POST http://127.0.0.1:8000//api/auth/signup_create_user
+Content-Type: application/json
+
+{
+  "name": "test-user",
+  "username" : "test-user",
+  "email": "ygb@gmail.com",
+  "phone_number": "+1234567989",
   "date_of_birth": "2004-08-24",
   "profile_picture": "default-avatar"
 }

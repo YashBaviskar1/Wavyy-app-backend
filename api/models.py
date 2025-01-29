@@ -3,13 +3,12 @@ import random
 import string 
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-def generate_unique_id() : 
+def generate_unique_id():
     length = 8
-    while True :
+    while True:
         unique_id = ''.join(random.choices(string.ascii_uppercase, k=length))
-        if Customer.objects.filter(unique_id = unique_id).count() == 0 :
-            break
-    return unique_id
+        if not Customer.objects.filter(unique_id=unique_id).exists():
+            return unique_id 
 
 def validate_image_size(file):
     max_size = 2 * 1024 * 1024  # 2 MB
@@ -18,7 +17,7 @@ def validate_image_size(file):
 # Create your models here.
 class Customer(models.Model) :
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='customer_profile', null=True, blank=True)
-    unique_id = models.CharField(max_length= 10, default="", unique=True)
+    unique_id = models.CharField(max_length= 10, default=generate_unique_id, unique=True)
     name = models.CharField(max_length=50, null=False)
     email = models.EmailField(null=False)
     phone_number = models.CharField(max_length=15, null=False)

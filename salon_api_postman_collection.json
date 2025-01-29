@@ -135,6 +135,32 @@
       "response": []
     },
     {
+      "name": "Signup Create User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/auth/signup_create_user",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "auth",
+            "signup_create_user"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"test-user\",\n  \"username\": \"test-user\",\n  \"email\": \"ygb@gmail.com\",\n  \"phone_number\": \"+1234567989\",\n  \"date_of_birth\": \"2004-08-24\",\n  \"profile_picture\": \"default-avatar\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
       "name": "Profile View",
       "request": {
         "method": "GET",
@@ -264,6 +290,237 @@
             "bookings",
             "1",
             "cancel"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test Token",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Token 30143e8a801bad94b14b68fac4fd135671e740e7"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/auth/test_token",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "auth",
+            "test_token"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Profile",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Token 54c1d914b81eedfbd31db023c5e63383d22aa968"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/profile/delete",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "profile",
+            "delete"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Salons",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Token ca1988d0df616f396f1b858c2dca82bc1ab9d792"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/salons?latitude=19.2764581&longitude=72.8730165",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "salons?latitude=19.2764581&longitude=72.8730165"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Service",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/salons/1/create_service",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "salons",
+            "1",
+            "create_service"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"service_name\": \"Haircut\",\n  \"service_type\": \"Basic\",\n  \"duration_in_mins\": 30,\n  \"price\": 500,\n  \"category\": 1,\n  \"rating\": 4.5,\n  \"service_image\": \"path/to/image.jpg\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Filter Services",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Token ca1988d0df616f396f1b858c2dca82bc1ab9d792"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/services/filter?category=Hair&priceMin=500&priceMax=1500&rating=4.5",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "services",
+            "filter?category=Hair&priceMin=500&priceMax=1500&rating=4.5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Salon Details",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/salons/1",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "salons",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Service Category",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/service_categories",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "service_categories"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"business\": 1,\n  \"name\": \"Hair Services\",\n  \"description\": \"All hair-related services\",\n  \"parent\": \"null\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Salon Services",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000api/salons/1/services",
+          "host": "13.60.171.74:8000api",
+          "path": [
+            "salons",
+            "1",
+            "services"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Booking Status (User 18)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Token ca1988d0df616f396f1b858c2dca82bc1ab9d792"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/bookings/status?userId=18",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "bookings",
+            "status?userId=18"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Booking Status (User 3)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Token ca1988d0df616f396f1b858c2dca82bc1ab9d792"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/bookings/status?userId=3",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "bookings",
+            "status?userId=3"
           ]
         }
       },

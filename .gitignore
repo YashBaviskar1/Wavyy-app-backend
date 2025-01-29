@@ -8,3 +8,4 @@ mobile_backend\api\migrations\__pycache__/
 settings.py
 test.rest
 py_json.py
+wavvy_api_postnan.json

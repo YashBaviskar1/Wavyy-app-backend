@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-!m-br8q9j0f%o2t#)#d^baz$)kf(clr@cwyg0)ljv61u*7*m68
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["13.60.171.74"]
 
 
 # Application definition
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+ #   'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -55,7 +55,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mobile_backend.urls'
-
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
