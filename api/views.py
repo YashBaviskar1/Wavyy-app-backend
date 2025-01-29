@@ -79,8 +79,8 @@ def generate_otp() :
     return random.randint(1000, 9999)
 
 def send_otp(otp, phone_number) : 
-    account_sid = os.environ["TWILIO_ACCOUNT_SID"]
-    auth_token = os.environ["TWILIO_AUTH_TOKEN"]
+    account_sid = "TWILIO_ACCOUNT_SID"
+    auth_token = "TWILIO_AUTH_TOKEN"
     client = Client(account_sid, auth_token)
     message = client.messages.create(
         body="Your Login OTP for wavvy application is {otp}. Welcome aboard!",
