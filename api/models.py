@@ -96,3 +96,40 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"Booking {self.id} for {self.user.username} at {self.salon.salon_name}"
+
+
+
+def generate_unique_coupon_id():
+    length = 10
+    while True:
+        unique_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
+        if not Coupon.objects.filter(coupon_id=unique_id).exists():
+            return unique_id
+
+class Coupon(models.Model):
+    name = models.CharField(max_length=100, unique=True)  # Name of the coupon
+    coupon_id = models.CharField(max_length=20, unique=True, default=generate_unique_coupon_id)  # Unique coupon ID
+    description = models.CharField(max_length=200)
+    discount_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)  # Fixed discount price
+    discount_percentage = models.FloatField(null=True, blank=True)  # Percentage discount
+    valid_from = models.DateTimeField()  
+    valid_to = models.DateTimeField()  
+    is_active = models.BooleanField(default=True)  # Coupon status (Active/Inactive)
+    usage_limit = models.PositiveIntegerField(null=True, blank=True)  
+    used_count = models.PositiveIntegerField(default=0) 
+    applicable_services = models.ManyToManyField(Services, blank=True, related_name="applicable_coupons")  # Applicable services
+    applicable_salon = models.ForeignKey(Salon, on_delete=models.CASCADE, related_name="salon_coupons", null=True, blank=True)  # Restrict to a specific salon (if needed)
+
+    def __str__(self):
+        return f"{self.name} ({self.coupon_id})"
+
+    def is_valid(self):
+        """Check if the coupon is valid based on dates and usage."""
+        from django.utils.timezone import now
+        if not self.is_active:
+            return False
+        if self.valid_from > now() or self.valid_to < now():
+            return False
+        if self.usage_limit and self.used_count >= self.usage_limit:
+            return False
+        return True

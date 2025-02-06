@@ -250,3 +250,26 @@ GET http://127.0.0.1:8000/api/bookings/status?userId=3
 Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
 
 
+###
+
+#Coupons 
+POST http://127.0.0.1:8000/api/coupons/
+Content-Type: application/json
+
+{
+    "name": "HOLI25",
+    "description": "Flat 25% off for Holi!",
+    "discount_price": null,
+    "discount_percentage": 25.0,
+    "valid_from": "2025-01-01T00:00:00Z",
+    "valid_to": "2025-02-01T23:59:59Z",
+    "is_active": true,
+    "usage_limit": 100,
+    "applicable_services": [],
+    "applicable_salon": null
+}
+
+###
+
+GET  http://127.0.0.1:8000/api/coupons/
+Content-Type: application/json

@@ -53,3 +53,10 @@ class SalonDetailSerializer(serializers.ModelSerializer):
             'salon_description', 'latitude', 'longitude', 'profile_img',
             'business_categories'
         ]
+
+from .models import Coupon
+
+class CouponSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Coupon
+        fields = "__all__"  # Include all fields in the response

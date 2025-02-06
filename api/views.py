@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse , request
 from rest_framework import generics, status
-from .models import Customer, Salon, Services, Booking, ServiceCategory
-from .serializers import CustomerSerializer, ServiceSerializer, SalonSerializer, BookingSerializer, ServiceCategorySerializer, SalonDetailSerializer
+from .models import Customer, Salon, Services, Booking, ServiceCategory, Coupon
+from .serializers import CustomerSerializer, ServiceSerializer, SalonSerializer, BookingSerializer, ServiceCategorySerializer, SalonDetailSerializer, CouponSerializer
 from rest_framework.decorators import api_view, APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED, HTTP_200_OK, HTTP_204_NO_CONTENT
@@ -440,3 +440,22 @@ def get_bookings(request):
     bookings = Booking.objects.filter(user=request.user)
     serializer = BookingSerializer(bookings, many=True)
     return Response(serializer.data)
+
+
+from django.utils.timezone import now
+class CouponView(APIView):
+ # Only authenticated users can access
+
+    def get(self, request):
+        """Fetch all active and valid coupons"""
+        coupons = Coupon.objects.filter()
+        serializer = CouponSerializer(coupons, many=True)
+        return Response(serializer.data, status=HTTP_200_OK)
+
+    def post(self, request):
+        """Create a new coupon"""
+        serializer = CouponSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=HTTP_201_CREATED)
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
