@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-!m-br8q9j0f%o2t#)#d^baz$)kf(clr@cwyg0)ljv61u*7*m68
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["13.60.171.74"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -53,7 +53,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'api.backends.EmailAuthBackend',
+]
 ROOT_URLCONF = 'mobile_backend.urls'
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True

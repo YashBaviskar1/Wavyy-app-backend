@@ -83,14 +83,14 @@ def generate_otp() :
     return random.randint(1000, 9999)
 
 def send_otp(otp, phone_number) : 
-    account_sid = TWILIO_ACCOUNT_SID
-    auth_token = TWILIO_ACCOUNT_AUTH_TOKEN
-    client = Client(account_sid, auth_token)
-    message = client.messages.create(
-        body=f"Your Login OTP for wavvy application is {otp}. Welcome aboard!",
-        from_="+16206788254",
-        to=f"{phone_number}",
-    )
+    # account_sid = TWILIO_ACCOUNT_SID
+    # auth_token = TWILIO_ACCOUNT_AUTH_TOKEN
+    # client = Client(account_sid, auth_token)
+    # message = client.messages.create(
+    #     body=f"Your Login OTP for wavvy application is {otp}. Welcome aboard!",
+    #     from_="+16206788254",
+    #     to=f"{phone_number}",
+    # )
 
     # print(message.body)
     print(f"{otp} sent to number {phone_number}")
@@ -121,9 +121,9 @@ def login(request):
         phone_number = request.data["phone_number"]
         if not phone_number : 
             return Response({"error" : "Phone number is required"}, status=status.HTTP_400_BAD_REQUEST)
-        
         #GENERATE 4 DIGIT OTP CODE 
-        otp = generate_otp()
+        # otp = generate_otp()
+        otp = 1234
         print(otp)
         cache.set(f"otp_{phone_number}", otp, timeout=300)
         #send OTP through twilio 
@@ -134,20 +134,19 @@ def login(request):
         email = request.data.get("email")
         password = request.data.get("password")
 
-        if not email:
-            return Response({"error": "Email is required"}, status=status.HTTP_400_BAD_REQUEST)
+        if not email or not password:
+            return Response({"error": "Email and password required"}, status=400)
 
-        if user_exists(email=email):
-            # Custom authentication using email
+        # Check if customer exists
+        if Customer.objects.filter(email=email).exists():
             user = authenticate(request, username=email, password=password)
-            if user is not None:
-                token, created = Token.objects.get_or_create(user=user)
-                return Response({"message": "Login successful", "token": token.key}, status=status.HTTP_200_OK)
+            if user:
+                token, _ = Token.objects.get_or_create(user=user)
+                return Response({"token": token.key, "message": "Login successful"}, status=200)
             else:
-                return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
-
+                return Response({"error": "Invalid password"}, status=401)
         else:
-            return Response({"message": "New User, Sign up"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "New user, proceed to signup"}, status=200)
 
     return Response({"error": "Invalid method"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -155,68 +154,99 @@ def login(request):
 def verify_otp(request):
     phone_number = request.data.get("phone_number")
     otp = request.data.get("otp")
+    print("hi1")
     if not phone_number or not otp:
-        return Response({"error": "Phone number and OTP are required"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": "Phone number and OTP are required"}, status=400)
+    
     cached_otp = cache.get(f"otp_{phone_number}")
+    print("otp ", cached_otp)
     if cached_otp and str(cached_otp) == str(otp):
-        if user_exists(phone_number=phone_number) :
-            return Response({"message": "Verification successful"}, status=status.HTTP_202_ACCEPTED)
-        else : 
-            return Response({"message" : "New User, proceed to signup"})
+        # Check if user exists by phone_number
+        print(phone_number)
+        print(Customer.objects.filter(phone_number=phone_number))
+        
+        if Customer.objects.filter(phone_number=phone_number).exists():
+            user = Customer.objects.get(phone_number=phone_number).user
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({"token": token.key, "message": "Login successful"}, status=200)
+        else:
+            # Mark phone_number as verified for signup
+            cache.set(f"verified_phone_{phone_number}", True, timeout=300)
+            return Response({"message": "Proceed to signup"}, status=200)
     else:
-        return Response({"message": "Incorrect or expired OTP"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        return Response({"error": "Invalid/expired OTP"}, status=406)
 
 
 @api_view(['POST'])
-def signup(request) :
-    if request.data["method"] == "phone" :
-        phone_number = request.data["phone_number"]
-        if not phone_number :
-            return Response({"error" : "phone_number is required "}, status=status.HTTP_400_BAD_REQUEST)
-        if user_exists(phone_number=phone_number) :
-            user = User.objects.filter(customer_profile__phone_number=phone_number).first()
-            token, created = Token.objects.get_or_create(user=user)
-            return Response(
-                {"message": "User already exists, logged in", "token": token.key},
-                status=status.HTTP_200_OK
-            )
-        otp = generate_otp()
-        print(otp)
-        cache.set(f"otp_{phone_number}", otp, timeout=300)
-        #send OTP through twilio 
+def signup(request):
+    method = request.data.get("method")
+    if method == "phone":
+        phone_number = request.data.get("phone_number")
+        if not phone_number:
+            return Response({"error": "Phone required"}, status=400)
+        
+        # Check if phone exists
+        if Customer.objects.filter(phone_number=phone_number).exists():
+            user = Customer.objects.get(phone_number=phone_number).user
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({"token": token.key, "message": "User exists"}, status=200)
+        
+        # Send OTP for new user
+        #otp = generate_otp()
+        otp = 1234
+        cache.set(f"otp_{phone_number}", otp, 300)
         send_otp(otp, phone_number)
-        return Response({"message" : "otp sent to number ", }, status=status.HTTP_200_OK)  
-    elif request.data["method"] == "email" : 
-        email = request.data["email"]
-        password = request.data["password"]
-        if not email :
-            return Response({"error" : "email is required "}, status=status.HTTP_400_BAD_REQUEST)   
-        if not password : 
-            return Response({"error" : "password is required "}, status=status.HTTP_400_BAD_REQUEST)   
-        if user_exists(email=email) :
-            user = User.objects.filter(customer_profile__email__iexact=email).first()
-            token, created = Token.objects.get_or_create(user=user)
-            return Response(
-                {"message": "User already exists, logged in", "token": token.key},
-                status=status.HTTP_200_OK
-            )
-        return Response({"email" : email, "password" : password, "message" : "new user proceed to signup"}, status=status.HTTP_200_OK)
+        return Response({"message": "OTP sent"}, status=200)
+
+    elif method == "email":
+        email = request.data.get("email")
+        password = request.data.get("password")
+        if not email or not password:
+            return Response({"error": "Email and password required"}, status=400)
+        
+        # Check if email exists
+        if Customer.objects.filter(email=email).exists():
+            user = Customer.objects.get(email=email).user
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({"token": token.key, "message": "User exists"}, status=200)
+        
+        # Proceed to signup
+        return Response({"message": "Proceed to create user"}, status=200)
 
 
-@api_view(['POST']) 
+
+@api_view(['POST'])
 def signup_create_user(request):
-    serializer = CustomerSerializer(data = request.data)
-    if serializer.is_valid() :
+    # For phone signup: ensure OTP was verified
+    phone_number = request.data.get("phone_number")
+    if phone_number :
+        if request.data.get("method") == "phone_number" : 
+            if not cache.get(f"verified_phone_{phone_number}"):
+                return Response({"error": "Phone not verified"}, status=400)
+    
+    # For email signup: ensure password is provided
+    email = request.data.get("email")
+    if email and not request.data.get("password"):
+        return Response({"error": "Password required"}, status=400)
+    
+    serializer = CustomerSerializer(data=request.data)
+    if serializer.is_valid():
+        # Create user with email as username
         user = User.objects.create_user(
-            username= request.data["name"] + str(random.randint(0, 9999)),
-            email=request.data["email"],
-            password=request.data.get('password', '')
+            username=serializer.validated_data["email"], 
+            email=serializer.validated_data["email"],
+            password=request.data.get("password", "123456789")
         )
-        customer = serializer.save(user=user)
+        # Create customer profile
+        Customer = serializer.save(user=user)
         token = Token.objects.create(user=user)
-        return Response({"token" : token.key, "customer" : serializer.data})
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+        
+        # Clear verification cache for phone
+        if phone_number:
+            cache.delete(f"verified_phone_{phone_number}")
+        
+        return Response({"token": token.key, "customer": serializer.data}, status=201)
+    return Response(serializer.errors, status=400)
 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
@@ -224,7 +254,12 @@ def signup_create_user(request):
 def test_token(request):
     return Response({"passed for {}".format(request.user)})
 
-
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def logout(request):
+    request.user.auth_token.delete()
+    return Response({"message": "Logged out"}, status=200)
 
 ### -----LOCATION API-------
 @api_view(['GET'])
@@ -382,3 +417,11 @@ class BookingStatusView(APIView):
         bookings = Booking.objects.filter(user=request.user)
         serializer = BookingSerializer(bookings, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_bookings(request):
+    bookings = Booking.objects.filter(user=request.user)
+    serializer = BookingSerializer(bookings, many=True)
+    return Response(serializer.data)

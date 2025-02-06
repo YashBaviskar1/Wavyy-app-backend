@@ -1,10 +1,10 @@
 ###
-POST http://13.60.171.74:8000/api/auth/signup
+POST http://127.0.0.1:8000/api/auth/signup
 Content-Type: application/json
 
 {
     "method" : "phone",
-    "phone_number" : "+1(318)4266301"
+    "phone_number" : "+123456789"
 }
 ###
 
@@ -12,8 +12,8 @@ POST http://127.0.0.1:8000/api/auth/verify-otp
 Content-Type: application/json
 
 {
-  "otp": "2105",
-  "phone_number": "+918356866781"
+  "otp": "1234",
+  "phone_number": "+123456789"
 }
 
 
@@ -27,7 +27,7 @@ Content-Type: application/json
 
 {
     "method" : "email",
-    "email" : "yashbav2224@gmail.com",
+    "email" : "test77@gmail.com",
     "password" : "123456"
 }
 
@@ -40,12 +40,11 @@ POST http://13.60.171.74:8000/api/auth/signup_create_user
 Content-Type: application/json
 
 {
-  "unique_id": "ACBSJSF",
-  "name": "test-user",
-  "username" : "test-user",
-  "email": "ygb@gmail.com",
-  "phone_number": "+1234567989",
-  "date_of_birth": "2004-08-24",
+  "name": "Jhon Doe ",
+  "username" : "jhondoeusername",
+  "email": "jhonedoe@gmail.com",
+  "phone_number" : "+123456789",
+  "date_of_birth": "1999-08-24",
   "profile_picture": "default-avatar"
 }
 
@@ -54,53 +53,70 @@ POST http://127.0.0.1:8000//api/auth/signup_create_user
 Content-Type: application/json
 
 {
-  "name": "test-user",
-  "username" : "test-user",
-  "email": "ygb@gmail.com",
-  "phone_number": "+1234567989",
-  "date_of_birth": "2004-08-24",
+  "method" : "phone_number",
+  "name": "Jhon Doe 3 ",
+  "username" : "jhondoeusername",
+  "email": "jhonedoe7@gmail.com",
+  "password" : "1234567890",
+  "phone_number" : "+123456789",
+  "date_of_birth": "1999-08-24",
   "profile_picture": "default-avatar"
 }
 
 ###
+POST http://127.0.0.1:8000//api/auth/signup_create_user
+Content-Type: application/json
+
+{
+  "method" : "email",
+  "name": "Jhon Doe 3 ",
+  "username" : "jhondoeusername",
+  "email": "jhonedoe7@gmail.com",
+  "password" : "1234567890",
+  "phone_number" : "+123456789",
+  "date_of_birth": "1999-08-24",
+  "profile_picture": "default-avatar"
+}
+
+### a8d0b0c2be0a5a25151a919e2c4f64cc4fb9139d
 # LOGIN REQUEST
 POST http://127.0.0.1:8000/api/auth/login
 Content-Type: application/json
 
 {
   "method": "phone",
-  "phone_number": "+9187665226311"
+  "phone_number": "+123456789"
 }
 
-
+## 063cb4a5f6817261c3dcb9467e362cb20f67d975 Jhon Doe 
 ###
 POST http://127.0.0.1:8000/api/auth/login
 Content-Type: application/json
 
 {
   "method": "email",
-  "email": "@gmail.com",
-  "password" : "123456"
+  "email": "test77@gmail.com",
+  "password" : "1234567890"
 }
 
-###
+### 8eb4ab832c3a27bd103c169420f52543648832e2
 POST http://127.0.0.1:8000/api/auth/verify-otp
 Content-Type: application/json
 
 {
-  "otp": "2805",
-  "phone_number": "+9187665226311"
+  "otp": "1234",
+  "phone_number": "+123456789"
 }
 
 
 
 ###
 
-GET http://127.0.0.1:8000/api/auth/test_token
-Authorization: Token  30143e8a801bad94b14b68fac4fd135671e740e7
+GET http://13.60.171.74:8000/api/auth/test_token
+Authorization: Token  1be2a4aabc4df0802328f649e6c8c3a308da0090
 
 
-###
+### 25a7f0bca206b050c59d0f5b5ce1dce5cb63d6e1
 
 
 #PROFILE MANGEMENT 
@@ -108,12 +124,16 @@ Authorization: Token  30143e8a801bad94b14b68fac4fd135671e740e7
     # path('profile/update', CustomerProfileUpdateView.as_view(), name='update-profile'),
     # path('profile/delete', CustomerProfileDeleteView.as_view(), name='delete-profile')
 #View - send the token 
-GET http://127.0.0.1:8000/api/profile/view
+GET http://13.60.171.74:8000/api/profile/view
 Content-Type: application/json
-Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
+Authorization: Token 3f9e60326cf747bbea59c995b93d75064f7c0cb3
 
 ###
+GET http://127.0.0.1:8000/api/profile/view
+Content-Type: application/json
+Authorization: Token 25a7f0bca206b050c59d0f5b5ce1dce5cb63d6e1
 
+###
 #Update 
 #specific field
 PATCH  http://127.0.0.1:8000/api/profile/update
