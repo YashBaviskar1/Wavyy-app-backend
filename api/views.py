@@ -232,13 +232,15 @@ def signup_create_user(request):
     serializer = CustomerSerializer(data=request.data)
     if serializer.is_valid():
         # Create user with email as username
+        if Customer.objects.filter(phone_number=serializer.validated_data["phone_number"]).exists() :
+            return Response({"message" : "Phone number already exists"}, status=401)
         user = User.objects.create_user(
-            username=serializer.validated_data["email"], 
+            username=serializer.validated_data["phone_number"], 
             email=serializer.validated_data["email"],
             password=request.data.get("password", "123456789")
         )
         # Create customer profile
-        Customer = serializer.save(user=user)
+        customer = serializer.save(user=user)
         token = Token.objects.create(user=user)
         
         # Clear verification cache for phone
@@ -410,13 +412,26 @@ class BookingStatusView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        user_id = request.query_params.get('userId')
-        if not user_id or int(user_id) != request.user.id:
-            return Response({"error": "Invalid or unauthorized userId."}, status=HTTP_400_BAD_REQUEST)
+        # Validate user_id
 
+        # Fetch customer details
+        try:
+            customer = Customer.objects.get(user=request.user)
+            customer_serializer = CustomerSerializer(customer)
+        except Customer.DoesNotExist:
+            return Response({"error": "Customer profile not found."}, status=HTTP_400_BAD_REQUEST)
+
+        # Fetch bookings for the user
         bookings = Booking.objects.filter(user=request.user)
-        serializer = BookingSerializer(bookings, many=True)
-        return Response(serializer.data, status=HTTP_200_OK)
+        booking_serializer = BookingSerializer(bookings, many=True)
+
+        # Combine customer and booking data in the response
+        response_data = {
+            "customer": customer_serializer.data,
+            "bookings": booking_serializer.data
+        }
+
+        return Response(response_data, status=HTTP_200_OK)
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])

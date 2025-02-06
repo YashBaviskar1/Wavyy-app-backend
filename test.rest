@@ -55,10 +55,9 @@ Content-Type: application/json
 {
   "method" : "phone_number",
   "name": "Jhon Doe 3 ",
-  "username" : "jhondoeusername",
   "email": "jhonedoe7@gmail.com",
   "password" : "1234567890",
-  "phone_number" : "+123456789",
+  "phone_number" : "+1234567890",
   "date_of_birth": "1999-08-24",
   "profile_picture": "default-avatar"
 }
@@ -73,7 +72,7 @@ Content-Type: application/json
   "username" : "jhondoeusername",
   "email": "jhonedoe7@gmail.com",
   "password" : "1234567890",
-  "phone_number" : "+123456789",
+  "phone_number" : "+1234567890",
   "date_of_birth": "1999-08-24",
   "profile_picture": "default-avatar"
 }
@@ -85,7 +84,7 @@ Content-Type: application/json
 
 {
   "method": "phone",
-  "phone_number": "+123456789"
+  "phone_number": "+1234567890"
 }
 
 ## 063cb4a5f6817261c3dcb9467e362cb20f67d975 Jhon Doe 
@@ -105,7 +104,7 @@ Content-Type: application/json
 
 {
   "otp": "1234",
-  "phone_number": "+123456789"
+  "phone_number": "+1234567890"
 }
 
 
@@ -113,7 +112,7 @@ Content-Type: application/json
 ###
 
 GET http://13.60.171.74:8000/api/auth/test_token
-Authorization: Token  1be2a4aabc4df0802328f649e6c8c3a308da0090
+Authorization: Token  5f25a72f95824de8404d79f331a5e020bd69e003
 
 
 ### 25a7f0bca206b050c59d0f5b5ce1dce5cb63d6e1
@@ -131,7 +130,7 @@ Authorization: Token 3f9e60326cf747bbea59c995b93d75064f7c0cb3
 ###
 GET http://127.0.0.1:8000/api/profile/view
 Content-Type: application/json
-Authorization: Token 25a7f0bca206b050c59d0f5b5ce1dce5cb63d6e1
+Authorization: Token 5f25a72f95824de8404d79f331a5e020bd69e003
 
 ###
 #Update 
@@ -226,7 +225,7 @@ Content-Type: application/json
 #BOOKING 
 POST http://127.0.0.1:8000/api/bookings/create
 Content-Type: application/json
-Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
+Authorization: Token 5f25a72f95824de8404d79f331a5e020bd69e003
 
 {
   "salon_id": 1,
@@ -237,8 +236,8 @@ Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
 ###
 #Booking get 
 
-GET http://127.0.0.1:8000/api/bookings/status?userId=18
-Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
+GET http://127.0.0.1:8000/api/bookings/status
+Authorization: Token 5f25a72f95824de8404d79f331a5e020bd69e003
 
 ###
 #Booking Cancel 

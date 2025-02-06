@@ -155,7 +155,33 @@
         },
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"name\": \"test-user\",\n  \"username\": \"test-user\",\n  \"email\": \"ygb@gmail.com\",\n  \"phone_number\": \"+1234567989\",\n  \"date_of_birth\": \"2004-08-24\",\n  \"profile_picture\": \"default-avatar\"\n}"
+          "raw": "{\n  \"method\": \"phone_number\",\n  \"name\": \"Jhon Doe 3 \",\n  \"username\": \"jhondoeusername\",\n  \"email\": \"jhonedoe7@gmail.com\",\n  \"password\": \"1234567890\",\n  \"phone_number\": \"+123456789\",\n  \"date_of_birth\": \"1999-08-24\",\n  \"profile_picture\": \"default-avatar\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Signup Create User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/auth/signup_create_user",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "auth",
+            "signup_create_user"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"method\": \"email\",\n  \"name\": \"Jhon Doe 3 \",\n  \"username\": \"jhondoeusername\",\n  \"email\": \"jhonedoe7@gmail.com\",\n  \"password\": \"1234567890\",\n  \"phone_number\": \"+123456789\",\n  \"date_of_birth\": \"1999-08-24\",\n  \"profile_picture\": \"default-avatar\"\n}"
         }
       },
       "response": []
