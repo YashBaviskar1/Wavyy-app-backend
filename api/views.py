@@ -36,6 +36,10 @@ class CustomerListView(generics.ListAPIView) :
     serializer_class = CustomerSerializer
 
 
+class BookingsListView(generics.ListAPIView) :
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+
 # PROFILE VIEW
 class CustomerProfileView(RetrieveAPIView):
     queryset = Customer.objects.all()

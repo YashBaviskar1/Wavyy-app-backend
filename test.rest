@@ -40,10 +40,10 @@ POST http://13.60.171.74:8000/api/auth/signup_create_user
 Content-Type: application/json
 
 {
-  "name": "Jhon Doe ",
+  "name": "Jhon Doe 5",
   "username" : "jhondoeusername",
-  "email": "jhonedoe@gmail.com",
-  "phone_number" : "+123456789",
+  "email": "test77@gmail.com",
+  "phone_number" : "+987654321",
   "date_of_birth": "1999-08-24",
   "profile_picture": "default-avatar"
 }
@@ -68,11 +68,11 @@ Content-Type: application/json
 
 {
   "method" : "email",
-  "name": "Jhon Doe 3 ",
+  "name": "Jhon Doe 5",
   "username" : "jhondoeusername",
-  "email": "jhonedoe7@gmail.com",
-  "password" : "1234567890",
-  "phone_number" : "+1234567890",
+  "email": "test77@gmail.com",
+  "password" : "123456789",
+  "phone_number" : "+987654321",
   "date_of_birth": "1999-08-24",
   "profile_picture": "default-avatar"
 }
@@ -95,7 +95,7 @@ Content-Type: application/json
 {
   "method": "email",
   "email": "test77@gmail.com",
-  "password" : "1234567890"
+  "password" : "123456789"
 }
 
 ### 8eb4ab832c3a27bd103c169420f52543648832e2
@@ -125,7 +125,7 @@ Authorization: Token  5f25a72f95824de8404d79f331a5e020bd69e003
 #View - send the token 
 GET http://13.60.171.74:8000/api/profile/view
 Content-Type: application/json
-Authorization: Token 3f9e60326cf747bbea59c995b93d75064f7c0cb3
+Authorization: Token 5f25a72f95824de8404d79f331a5e020bd69e003
 
 ###
 GET http://127.0.0.1:8000/api/profile/view
@@ -249,18 +249,25 @@ Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
 GET http://127.0.0.1:8000/api/bookings/status?userId=3
 Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
 
+###
+
+
+GET http://127.0.0.1:8000/api/all_bookings
+
+
+
 
 ###
 
 #Coupons 
-POST http://127.0.0.1:8000/api/coupons/
+POST http://13.60.171.74:8000/api/coupons/
 Content-Type: application/json
 
 {
-    "name": "HOLI25",
-    "description": "Flat 25% off for Holi!",
+    "name": "THRIFTY100",
+    "description": "Flat 100 off Friday booking!",
     "discount_price": null,
-    "discount_percentage": 25.0,
+    "discount_percentage": 10.0,
     "valid_from": "2025-01-01T00:00:00Z",
     "valid_to": "2025-02-01T23:59:59Z",
     "is_active": true,
@@ -271,5 +278,5 @@ Content-Type: application/json
 
 ###
 
-GET  http://127.0.0.1:8000/api/coupons/
+GET  http://13.60.171.74:8000/api/coupons/
 Content-Type: application/json
