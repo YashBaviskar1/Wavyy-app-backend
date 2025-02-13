@@ -161,7 +161,7 @@
       "response": []
     },
     {
-      "name": "Signup Create User",
+      "name": "Signup Creaste User",
       "request": {
         "method": "POST",
         "header": [
@@ -440,6 +440,29 @@
       "response": []
     },
     {
+      "name": "Filter Salons by Category",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/salons/filter/?category=Haircut",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "salons",
+            "filter",
+            "?category=Haircut"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name": "Get Salon Details",
       "request": {
         "method": "GET",
@@ -482,6 +505,88 @@
         "body": {
           "mode": "raw",
           "raw": "{\n  \"business\": 1,\n  \"name\": \"Hair Services\",\n  \"description\": \"All hair-related services\",\n  \"parent\": \"null\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Featured Salons",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/featured-salons/",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "featured-salons",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Bookmark",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Token 5f25a72f95824de8404d79f331a5e020bd69e003"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/bookmarks/",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "bookmarks",
+            ""
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"salon_id\": 3\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Bookmark",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Token 5f25a72f95824de8404d79f331a5e020bd69e003"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/bookmarks/",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "bookmarks",
+            ""
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"salon_id\": 1\n}"
         }
       },
       "response": []

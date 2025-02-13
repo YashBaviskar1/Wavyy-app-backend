@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse , request
 from rest_framework import generics, status
-from .models import Customer, Salon, Services, Booking, ServiceCategory, Coupon
-from .serializers import CustomerSerializer, ServiceSerializer, SalonSerializer, BookingSerializer, ServiceCategorySerializer, SalonDetailSerializer, CouponSerializer
+from .models import Customer, Salon, Services, Booking, ServiceCategory, Coupon, Bookmark
+from .serializers import CustomerSerializer, ServiceSerializer, SalonSerializer, BookingSerializer, ServiceCategorySerializer, SalonDetailSerializer, CouponSerializer, SalonFilterSerializer, SalonFilterSerializer, BookmarkSerializer
 from rest_framework.decorators import api_view, APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED, HTTP_200_OK, HTTP_204_NO_CONTENT
@@ -18,7 +18,7 @@ from twilio.rest import Client
 import os 
 from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.generics import RetrieveAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.generics import RetrieveAPIView, UpdateAPIView, DestroyAPIView, ListAPIView
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -327,8 +327,37 @@ class ServiceFilterView(APIView):
         serializer = ServiceSerializer(services, many=True)
         return Response(serializer.data)
     
+# views.py
 
+
+class SalonCategoryFilterView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        category = request.query_params.get('category')
+        if not category:
+            return Response({"error": "Category parameter required"}, status=400)
+
+        # Optimized query with prefetch_related
+        salons = Salon.objects.filter(
+            Q(business_categories__name__icontains=category) |
+            Q(business_categories__services__service_name__icontains=category)
+        ).distinct().prefetch_related(
+            'business_categories__services'
+        )
+
+        serializer = SalonFilterSerializer(
+            salons,
+            many=True,
+            context={'category': category}
+        )
+        return Response(serializer.data)
 ###SALON DETAILS API 
+
+class FeaturedSalonListView(ListAPIView):
+    queryset = Salon.objects.filter(is_featured=True)  # Fetch only featured salons
+    serializer_class = SalonFilterSerializer
+
 
 class SalonDetailView(APIView):
     permission_classes = [AllowAny]
@@ -361,6 +390,58 @@ class SalonServicesView(APIView):
         serializer = ServiceSerializer(services, many=True)
         return Response(serializer.data)
 
+## BOOKMARK HANDLE 
+
+# views.py
+
+
+class BookmarkView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    
+    def post(self, request):
+        salon_id = request.data.get('salon_id')
+        if not salon_id:
+            return Response({"error": "salon_id is required"}, status=400)
+            
+        try:
+            salon = Salon.objects.get(id=salon_id)
+            customer = request.user.customer_profile
+        except Salon.DoesNotExist:
+            return Response({"error": "Salon not found"}, status=404)
+            
+        bookmark, created = Bookmark.objects.get_or_create(user=customer, salon=salon)
+        if not created:
+            return Response({"message": "Salon already bookmarked"}, status=200)
+            
+        return Response(BookmarkSerializer(bookmark).data, status=201)
+
+    def delete(self, request):
+        salon_id = request.data.get('salon_id')
+        if not salon_id:
+            return Response({"error": "salon_id is required"}, status=400)
+            
+        try:
+            bookmark = Bookmark.objects.get(
+                user=request.user.customer_profile,
+                salon_id=salon_id
+            )
+            bookmark.delete()
+            return Response({"message": "Bookmark removed"}, status=200)
+        except Bookmark.DoesNotExist:
+            return Response({"error": "Bookmark not found"}, status=404)
+
+class BookmarkedSalonsView(generics.ListAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    serializer_class = SalonSerializer
+
+    def get_queryset(self):
+        return Salon.objects.filter(
+            bookmarked_by__user=self.request.user.customer_profile
+        ).distinct()
 
 
 ## BOOKING HANDLING 

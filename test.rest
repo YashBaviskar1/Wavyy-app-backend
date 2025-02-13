@@ -66,7 +66,7 @@ Content-Type: application/json
   "name": "Jhon Doe 9",
   "gender" : "male",
   "email": "jhonedoe9@gmail.com",
-  "password" : "+122890802",
+  "password" : "+1234567111",
   "phone_number" : "+1234567111",
   "date_of_birth": "1999-08-24",
   "profile_picture": "default-avatar"
@@ -211,6 +211,29 @@ Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
 GET http://127.0.0.1:8000/api/salons/1
 Content-Type: application/json
 
+###
+GET http://127.0.0.1:8000/api/featured-salons/
+Content-Type: application/json
+
+### BOOKMARKS
+### CREATE BOOKMARK
+POST http://127.0.0.1:8000//api/bookmarks
+Content-Type: application/json
+Authorization: Token 5f25a72f95824de8404d79f331a5e020bd69e003
+
+{
+  "salon_id" : 3
+}
+
+###
+### DELETE BOOKMARK
+DELETE http://127.0.0.1:8000//api/bookmarks
+Content-Type: application/json
+Authorization: Token 5f25a72f95824de8404d79f331a5e020bd69e003
+
+{
+  "salon_id" : 1
+}
 
 ###
 #Service detials
@@ -224,6 +247,11 @@ Content-Type: application/json
     "parent": null
 }
 
+
+###
+#Service Filters 
+GET http://127.0.0.1:8000/api/salons/filter/?category=Haircut
+Content-Type: application/json
 
 
 ###

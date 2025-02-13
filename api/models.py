@@ -37,10 +37,11 @@ class Salon(models.Model):
     owner_email = models.EmailField()
     gst = models.CharField(max_length=15, blank=True, null=True)
     salon_description = models.TextField(blank=True)
+    address_description = models.TextField(blank=True)
     latitude = models.FloatField()
     longitude = models.FloatField()
     profile_img = models.ImageField(upload_to="profiles/", null=True, blank=True, validators=[validate_image_size])
-
+    is_featured = models.BooleanField(default=False) 
     def __str__(self):
         return self.salon_name
     
@@ -134,3 +135,16 @@ class Coupon(models.Model):
         if self.usage_limit and self.used_count >= self.usage_limit:
             return False
         return True
+
+
+## BOOKMARKS 
+class Bookmark(models.Model):
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='bookmarks')
+    salon = models.ForeignKey(Salon, on_delete=models.CASCADE, related_name='bookmarked_by')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'salon')  # Prevent duplicate bookmarks
+
+    def __str__(self):
+        return f"{self.user.name} bookmarked {self.salon.salon_name}"

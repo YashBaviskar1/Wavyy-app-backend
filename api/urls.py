@@ -3,7 +3,7 @@ from django.urls import path
 from .views import CustomerView, CustomerListView, signup_create_user, login, test_token, verify_otp, signup
 from .views import CustomerProfileView, CustomerProfileUpdateView, CustomerProfileDeleteView, get_salons_by_location, ServiceFilterView
 from .views import SalonDetailView, SalonServicesView, BookingCreateView, BookingStatusView, BookingCancelView, SalonCreateView, ServiceCreateView
-from .views import ServiceCategoryCreateView, CouponView, BookingsListView
+from .views import ServiceCategoryCreateView, CouponView, BookingsListView, SalonCategoryFilterView, FeaturedSalonListView, BookmarkedSalonsView, BookmarkView
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
@@ -24,10 +24,14 @@ urlpatterns = [
     path('bookings/create', BookingCreateView.as_view(), name='create_booking'),
     path('bookings/<int:booking_id>/cancel', BookingCancelView.as_view(), name='cancel_booking'),
     path('bookings/status', BookingStatusView.as_view(), name='booking_status'),
+    path('bookmarks', BookmarkView.as_view(), name='manage-bookmarks'),
+    path('bookmarks/list', BookmarkedSalonsView.as_view(), name='bookmarked-salons'),
     path('all_bookings', BookingsListView.as_view()),
+    path('featured-salons/', FeaturedSalonListView.as_view(), name='featured-salons'),
     path('create_salons', SalonCreateView.as_view(), name = 'salon-create'),
     path('create_service', ServiceCreateView.as_view(), name='create_service'),
     path('service_categories',  ServiceCategoryCreateView.as_view(), name='create-service-category'),
+    path('salons/filter/', SalonCategoryFilterView.as_view(), name='salon-filter'),
     path('coupons/', CouponView.as_view(), name='coupons-list'),
 ]
 
