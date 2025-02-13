@@ -4,16 +4,24 @@ Content-Type: application/json
 
 {
     "method" : "phone",
-    "phone_number" : "+123456789"
+    "phone_number" : "+1234567111"
 }
 ###
+###
+POST http://13.60.171.74:8000/api/auth/signup
+Content-Type: application/json
 
+{
+    "method" : "phone",
+    "phone_number" : "+9187665226311"
+}
+###
 POST http://127.0.0.1:8000/api/auth/verify-otp
 Content-Type: application/json
 
 {
   "otp": "1234",
-  "phone_number": "+123456789"
+  "phone_number": "+1234567111"
 }
 
 
@@ -22,7 +30,7 @@ Content-Type: application/json
 
 
 ###
-POST http://127.0.0.1:8000/api/auth/signup
+POST http://13.60.171.74:8000/api/auth/signup
 Content-Type: application/json
 
 {
@@ -43,21 +51,23 @@ Content-Type: application/json
   "name": "Jhon Doe 5",
   "username" : "jhondoeusername",
   "email": "test77@gmail.com",
-  "phone_number" : "+987654321",
+  "gender" : "male",
+  "phone_number" : "+122890802",
   "date_of_birth": "1999-08-24",
   "profile_picture": "default-avatar"
 }
 
 ###
-POST http://127.0.0.1:8000//api/auth/signup_create_user
+POST http://127.0.0.1:8000/api/auth/signup_create_user
 Content-Type: application/json
 
 {
   "method" : "phone_number",
-  "name": "Jhon Doe 3 ",
-  "email": "jhonedoe7@gmail.com",
-  "password" : "1234567890",
-  "phone_number" : "+1234567890",
+  "name": "Jhon Doe 9",
+  "gender" : "male",
+  "email": "jhonedoe9@gmail.com",
+  "password" : "+122890802",
+  "phone_number" : "+1234567111",
   "date_of_birth": "1999-08-24",
   "profile_picture": "default-avatar"
 }
@@ -69,7 +79,8 @@ Content-Type: application/json
 {
   "method" : "email",
   "name": "Jhon Doe 5",
-  "username" : "jhondoeusername",
+  "username" : "test77@gmail.com",
+  "gender" : "male",
   "email": "test77@gmail.com",
   "password" : "123456789",
   "phone_number" : "+987654321",

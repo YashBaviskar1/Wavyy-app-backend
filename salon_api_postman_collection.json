@@ -155,7 +155,7 @@
         },
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"method\": \"phone_number\",\n  \"name\": \"Jhon Doe 3 \",\n  \"username\": \"jhondoeusername\",\n  \"email\": \"jhonedoe7@gmail.com\",\n  \"password\": \"1234567890\",\n  \"phone_number\": \"+123456789\",\n  \"date_of_birth\": \"1999-08-24\",\n  \"profile_picture\": \"default-avatar\"\n}"
+          "raw": "{\n  \"method\": \"phone_number\",\n  \"name\": \"Jhon Doe 3 \",\n  \"username\": \"jhondoeusername\",\n  \"email\": \"jhonedoe7@gmail.com\",\n  \"gender\": \"male\",\n  \"password\": \"1234567890\",\n  \"phone_number\": \"+123456789\",\n  \"date_of_birth\": \"1999-08-24\",\n  \"profile_picture\": \"default-avatar\"\n}"
         }
       },
       "response": []
@@ -181,7 +181,7 @@
         },
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"method\": \"email\",\n  \"name\": \"Jhon Doe 3 \",\n  \"username\": \"jhondoeusername\",\n  \"email\": \"jhonedoe7@gmail.com\",\n  \"password\": \"1234567890\",\n  \"phone_number\": \"+123456789\",\n  \"date_of_birth\": \"1999-08-24\",\n  \"profile_picture\": \"default-avatar\"\n}"
+          "raw": "{\n  \"method\": \"email\",\n  \"name\": \"Jhon Doe 3 \",\n  \"username\": \"jhondoeusername\",\n  \"email\": \"jhonedoe7@gmail.com\",\n  \"gender\": \"male\",\n  \"password\": \"1234567890\",\n  \"phone_number\": \"+123456789\",\n  \"date_of_birth\": \"1999-08-24\",\n  \"profile_picture\": \"default-avatar\"\n}"
         }
       },
       "response": []

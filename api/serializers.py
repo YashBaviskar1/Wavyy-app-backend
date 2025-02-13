@@ -4,7 +4,7 @@ from .models import Customer, Services, Salon, Booking, ServiceCategory
 class CustomerSerializer(serializers.ModelSerializer) :
     class Meta:
         model = Customer 
-        fields = ('id', 'unique_id', 'name', 'email', 
+        fields = ('id', 'unique_id', 'name', 'gender', 'email', 
                   'phone_number', 'date_of_birth', 
                   'created_at', 'profile_picture')
         read_only_fields = ['unique_id', 'created_at']
