@@ -148,7 +148,7 @@ Authorization: Token 5f25a72f95824de8404d79f331a5e020bd69e003
 #specific field
 PATCH  http://127.0.0.1:8000/api/profile/update
 Content-Type: application/json
-Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
+Authorization: Token 5f25a72f95824de8404d79f331a5e020bd69e003
 
 {
     "name": "Updated  YGB"
@@ -158,13 +158,14 @@ Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
 #all details 
 PUT http://127.0.0.1:8000/api/profile/update
 Content-Type: application/json
-Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
+Authorization: Token 5f25a72f95824de8404d79f331a5e020bd69e003
 
 {
     "name": "Updated  name -2",
     "email" : "yashbav24@gmail.com",
+    "gender" : "male",
     "phone_number" : "+12345678", 
-  "date_of_birth": "2004-08-24",
+    "date_of_birth": "2004-08-24"
 }
 
 ###
@@ -202,8 +203,8 @@ Content-Type: application/json
 
 ###
 
-GET http://127.0.0.1:8000/api/services/filter?category=Hair&priceMin=500&priceMax=1500&rating=4.5
-Authorization: Token ca1988d0df616f396f1b858c2dca82bc1ab9d792
+GET http://127.0.0.1:8000/api/services/filter?category=Hair%20Services&priceMin=400&priceMax=600
+
 
 ###
 #Salon details
@@ -226,6 +227,11 @@ Authorization: Token 5f25a72f95824de8404d79f331a5e020bd69e003
 }
 
 ###
+
+GET http://127.0.0.1:8000//api/bookmarks
+Authorization: Token 5f25a72f95824de8404d79f331a5e020bd69e003
+
+
 ### DELETE BOOKMARK
 DELETE http://127.0.0.1:8000//api/bookmarks
 Content-Type: application/json

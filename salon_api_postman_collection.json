@@ -263,7 +263,7 @@
         },
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"name\": \"Updated name -2\",\n  \"email\": \"yashbav24@gmail.com\",\n  \"phone_number\": \"+12345678\",\n  \"date_of_birth\": \"2004-08-24\"\n}"
+          "raw": "{\n  \"name\": \"Updated name -2\",\n  \"email\": \"yashbav24@gmail.com\",\n  \"gender\": \"male\",\n  \"phone_number\": \"+12345678\",\n  \"date_of_birth\": \"2004-08-24\"\n}"
         }
       },
       "response": []
@@ -428,12 +428,12 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/services/filter?category=Hair&priceMin=500&priceMax=1500&rating=4.5",
+          "raw": "http://13.60.171.74:8000/api/services/filter?category=Hair%20Services&priceMin=400&priceMax=600",
           "host": "13.60.171.74:8000",
           "path": [
             "api",
             "services",
-            "filter?category=Hair&priceMin=500&priceMax=1500&rating=4.5"
+            "filter?category=Hair%20Services&priceMin=400&priceMax=600"
           ]
         }
       },
@@ -557,6 +557,27 @@
         "body": {
           "mode": "raw",
           "raw": "{\n  \"salon_id\": 3\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Bookmarks",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Token 5f25a72f95824de8404d79f331a5e020bd69e003"
+          }
+        ],
+        "url": {
+          "raw": "http://13.60.171.74:8000/api/bookmarks",
+          "host": "13.60.171.74:8000",
+          "path": [
+            "api",
+            "bookmarks"
+          ]
         }
       },
       "response": []

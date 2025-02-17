@@ -24,6 +24,7 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 import math
 from dotenv import load_dotenv
+
 load_dotenv()
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
 TWILIO_ACCOUNT_AUTH_TOKEN = os.environ.get("TWILIO_ACCOUNT_AUTH_TOKEN")
@@ -307,24 +308,38 @@ class ServiceFilterView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        category = request.query_params.get('category')
-        price_min = request.query_params.get('priceMin')
-        price_max = request.query_params.get('priceMax')
-        rating = request.query_params.get('rating')
-
-        filters = Q()
-
-        if category:
-            filters &= Q(category__name__icontains=category)
-        if price_min:
-            filters &= Q(price__gte=price_min)
-        if price_max:
-            filters &= Q(price__lte=price_max)
-        if rating:
-            filters &= Q(rating__gte=rating)
-
-        services = Services.objects.filter(filters)
-        serializer = ServiceSerializer(services, many=True)
+        params = request.query_params
+        print(f"Received filters: {dict(params)}")  # Debugging
+        
+        # Convert parameters to correct types
+        try:
+            filters = Q()
+            
+            # Category filter (string match)
+            if category := params.get('category'):
+                filters &= Q(category__name__iexact=category)
+            
+            # Price range filter
+            price_min = int(params['priceMin']) if 'priceMin' in params else None
+            price_max = int(params['priceMax']) if 'priceMax' in params else None
+            if price_min is not None:
+                filters &= Q(price__gte=price_min)
+            if price_max is not None:
+                filters &= Q(price__lte=price_max)
+            
+            # Rating filter
+            if rating := params.get('rating'):
+                filters &= Q(rating__gte=float(rating))
+            
+            # Debug generated query
+            print(f"Generated filters: {filters}")
+            queryset = Services.objects.filter(filters)
+            print(f"SQL Query: {str(queryset.query)}")  # Show actual SQL
+            
+        except (ValueError, TypeError) as e:
+            return Response({"error": f"Invalid parameter format: {str(e)}"}, status=400)
+        
+        serializer = ServiceSerializer(queryset, many=True)
         return Response(serializer.data)
     
 # views.py
@@ -398,7 +413,11 @@ class SalonServicesView(APIView):
 class BookmarkView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
-
+    def get(self, request):
+        """Retrieve all bookmarks for the authenticated user."""
+        customer = request.user.customer_profile
+        bookmarks = Bookmark.objects.filter(user=customer)
+        return Response(BookmarkSerializer(bookmarks, many=True).data, status=200)
     
     def post(self, request):
         salon_id = request.data.get('salon_id')
