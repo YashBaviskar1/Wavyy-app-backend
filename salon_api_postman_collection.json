@@ -15,8 +15,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/auth/signup",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/auth/signup",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "auth",
@@ -41,8 +41,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/auth/verify-otp",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/auth/verify-otp",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "auth",
@@ -67,8 +67,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/auth/signup",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/auth/signup",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "auth",
@@ -93,8 +93,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/auth/login",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/auth/login",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "auth",
@@ -119,8 +119,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/auth/login",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/auth/login",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "auth",
@@ -145,8 +145,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/auth/signup_create_user",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/auth/signup_create_user",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "auth",
@@ -171,8 +171,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/auth/signup_create_user",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/auth/signup_create_user",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "auth",
@@ -197,8 +197,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/profile/view",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/profile/view",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "profile",
@@ -223,8 +223,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/profile/update",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/profile/update",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "profile",
@@ -253,8 +253,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/profile/update",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/profile/update",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "profile",
@@ -283,8 +283,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/bookings/create",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/bookings/create",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "bookings",
@@ -309,8 +309,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/bookings/1/cancel",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/bookings/1/cancel",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "bookings",
@@ -332,8 +332,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/auth/test_token",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/auth/test_token",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "auth",
@@ -358,8 +358,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/profile/delete",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/profile/delete",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "profile",
@@ -380,8 +380,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/salons?latitude=19.2764581&longitude=72.8730165",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/salons?latitude=19.2764581&longitude=72.8730165",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "salons?latitude=19.2764581&longitude=72.8730165"
@@ -401,8 +401,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/salons/1/create_service",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/salons/1/create_service",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "salons",
@@ -418,22 +418,51 @@
       "response": []
     },
     {
-      "name": "Filter Services",
+      "name": "Filter Services by Name and Price",
       "request": {
         "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Token 3f9e60326cf747bbea59c995b93d75064f7c0cb3"
-          }
-        ],
+        "header": [],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/services/filter?category=Hair%20Services&priceMin=400&priceMax=600",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/services/filter?service_name=Haircut&priceMin=200&priceMax=600",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "services",
-            "filter?category=Hair%20Services&priceMin=400&priceMax=600"
+            "filter?service_name=Haircut&priceMin=200&priceMax=600"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Filter Services by Price Range",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://13.60.92.201:8000/api/services/filter?priceMin=300&priceMax=500",
+          "host": "13.60.92.201:8000",
+          "path": [
+            "api",
+            "services",
+            "filter?priceMin=300&priceMax=500"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Filter Services by Name and Rating",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://13.60.92.201:8000/api/services/filter?service_name=Haircut&rating=4.5",
+          "host": "13.60.92.201:8000",
+          "path": [
+            "api",
+            "services",
+            "filter?service_name=Haircut&rating=4.5"
           ]
         }
       },
@@ -450,8 +479,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/salons/filter/?category=Haircut",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/salons/filter/?category=Haircut",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "salons",
@@ -473,8 +502,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/salons/1",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/salons/1",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "salons",
@@ -495,8 +524,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/service_categories",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/service_categories",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "service_categories"
@@ -520,8 +549,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/featured-salons/",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/featured-salons/",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "featured-salons",
@@ -546,8 +575,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/bookmarks/",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/bookmarks/",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "bookmarks",
@@ -572,8 +601,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/bookmarks",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/bookmarks",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "bookmarks"
@@ -597,8 +626,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/bookmarks/",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/bookmarks/",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "bookmarks",
@@ -623,8 +652,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000api/salons/1/services",
-          "host": "13.60.171.74:8000api",
+          "raw": "http://13.60.92.201:8000api/salons/1/services",
+          "host": "13.60.92.201:8000api",
           "path": [
             "salons",
             "1",
@@ -645,8 +674,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/bookings/status?userId=18",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/bookings/status?userId=18",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "bookings",
@@ -667,8 +696,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/bookings/status?userId=3",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/bookings/status?userId=3",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "bookings",
@@ -689,8 +718,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/coupons/",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/coupons/",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "coupons",
@@ -715,8 +744,8 @@
           }
         ],
         "url": {
-          "raw": "http://13.60.171.74:8000/api/coupons/",
-          "host": "13.60.171.74:8000",
+          "raw": "http://13.60.92.201:8000/api/coupons/",
+          "host": "13.60.92.201:8000",
           "path": [
             "api",
             "coupons",
